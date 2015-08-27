@@ -15,6 +15,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	</head>
 	<body>
-		<h2> Los datos se cargaron correctamente</h2>
+		<strong> Los datos se cargaron correctamente</strong>
 	</body>
 </html>

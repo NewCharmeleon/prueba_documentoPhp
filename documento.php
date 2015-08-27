@@ -1,8 +1,8 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8')
+header('Content-Type: text/html; charset=utf-8');
 
-require_once 'paravalidar.php'
+require_once 'paravalidar.php';
 
 $apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
 $nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$errores[] = 'El campo Provincia es incorrecto.';
 	}
 	
-	if (!errores){
-		header('Location: validook.php);
+	if (!$errores){
+		header('Location: validadook.php');
 		exit;
 	}
 }
@@ -80,60 +80,93 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		<form action="documento.php" method="post">	
 			<fieldset>
-			Apellido/s: <br> <input type="text" name="apellido"
-			pattern="[a-zA-Záéíóúñ]{2,50}" required/ ><br>
+			Apellido/s: <br> <input title="Ingrese Apellido/s" type="text" name="apellido"
+			pattern="[a-zA-Záéíóúñ\s]{2,50}" required/ ><br>
 			
-			Nombre/s: <br> <input type="text" name="nombre"
-			pattern="[a-zA-Záéíóúñ]{2,50}" required/><br>
+			Nombre/s: <br> <input title="Ingrese Nombre/s" type="text" name="nombre"
+			pattern="[a-zA-Záéíóúñ\s]{2,50}" required/><br>
 			<label>		
-			Numero De Documento: <br> <input type="text"
+			Numero De Documento: <br> <input title="Ingrese Numero de Documento (8 digitos))"type="text"
 			name="numeroDocumento"
 			pattern="[0-9]{6,8}" required/><br>
 			
-			Sexo: <br><label for="M">M</label><input type="radio" name="Sexo" id="M" value="M">
-			<label for="F">F</label><input type="radio" name="sexo" id="F" value="F"><br>
-			Nacionalidad: <br><input type="text"
+			Sexo: <br><label for="M">Masculino</label><input type="radio" name="Sexo" id="M" value="M" checked>
+			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="Femenino"><br>
+			Nacionalidad: <br><input title="Ingrese Nacionalidad" type="text"
 			       name="nacionalidad"
-			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>	
-			Foto: <br><input type="file" name="foto" required/>
+			Foto: <br><input title="Debe adjuntar archivo .jpg o .bmp"type="file" name="foto" >
 			<br>		
 			Fecha De Expedicion:<br>
-			<input type="date"
-			       name="fechaExpedicion">
+			<input type="date" value="<?php $fechaActual=date('d-m-Y'); 
+			echo $fechaActual;?>" disabled=true />
 			<br>			
 			Fecha De Vencimiento: <br>
 			<input type="date"
-			       name="fechaVencimiento"><br>
+			       value="<?php $fechaVenc= date('d-m-Y',strtotime('+15 Year'));
+					echo $fechaVenc; ?>" disabled=true/>
+			<br>
 			Domicilio: <br>
-			<input type="text"
+			<input title="Debe ingresar Domicilio" type="text"
 				   name="domicilio"
-			pattern="[0-9a-zA-Záéíóúñ]{5,50}" required/>
+			pattern="[0-9a-zA-Záéíóúñ\s]{5,50}" required/>
 			<br>
 			Ciudad: <br>
-			<input type="text"
+			<input title="Debe ingresar Ciudad" type="text"
 				   name="ciudad"
 			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
 			<br>
 			Departamento: <br>
-			<input type="text"
+			<input title="Debe ingresar Departamento" type="text"
 				   name="departamento"
-			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
 			Provincia: <br>
-			<input type="text"
+			<input title="Debe ingresar Provincia" type="text"
 				   name="provincia"
-			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
 			Fecha de Nacimiento: <br>
-			<input type="date"
+			<select name="dia">
+				<?php
+					for ($i=1; $i<=31; $i++){
+						if($i==date('d')){
+							echo '<option value="'.$i.'" selected>'.$i.'</option>';
+						}else{
+							echo '<option value="'.$i.'">'.$i.'</option>';
+					}}
+				?>
+			</select>	
+			<select name="mes">
+				<?php
+					for ($i=1; $i<=12; $i++){
+						if($i==date('m')){
+							echo '<option value="'.$i.'" selected>'.$i.'</option>';
+						}else{
+							echo '<option value="'.$i.'">'.$i.'</option>';
+					}}
+					?>
+			</select>	
+			<select name="anio">
+				<?php
+					for ($i=date('o'); $i>=1900; $i--){
+						if($i==date('o')){
+							echo '<option value="'.$i.'" selected>'.$i.'</option>';
+						}else{
+							echo '<option value="'.$i.'">'.$i.'</option>';
+					}}
+					?>
+			</select>	
+			<br><br>		
+			<input title="Debe ingresar Fecha de Nacimiento" type="date"
 				   name="fechaNacimiento"
 			required/>
 			<br>
 			Lugar de Nacimiento: <br>
-			<input type="text"
+			<input title="Debe ingresar Lugar de Nacimiento" type="text"
 				   name="lugarNacimiento"
-			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
 			<input type="submit" value="Enviar Datos">
 			</fieldset>
