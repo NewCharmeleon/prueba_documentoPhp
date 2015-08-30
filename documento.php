@@ -1,14 +1,20 @@
 <?php
 
 header('Content-Type: text/html; charset=utf-8');
-
+$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
+$provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
+	'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
+	'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
+	'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
+	'Tierra del Fuego', 'Tucumán');
 require_once 'paravalidar.php';
 
+	
 $apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
 $nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
 $numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null;
 $sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null;
-$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
+//$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
 $foto= isset($_POST['foto']) ? $_POST['foto'] : null;
 $domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null;
 $ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
@@ -18,24 +24,28 @@ $fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] :
 $lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	if (!validaCaracter($apellido)){
-		$errores[] = 'El campo Apellido es incorrecto.';
-	}
-	if (!validanombre($nombre)){
-		$errores[] = 'El campo Nombre es incorrecto.';
-	}
 	$opciones = array(
 		'options' => array(
 			'min_range' => 1000000,
 			'max_range' => 99999999
 			)
 	);
+	
+	
+	
+	if (!validaCaracter($apellido)){
+		$errores[] = 'El campo Apellido es incorrecto.';
+	}
+	if (!validanombre($nombre)){
+		$errores[] = 'El campo Nombre es incorrecto.';
+	}
+	
 	if (!validarNumero($numeroDocumento, $opciones)){
 		$errores[] = 'El campo Numero de Documento es incorrecto.';
 	}
-	if (!validaCaracter($nacionalidad)){
+	/*if (!validaCaracter($nacionalidad)){
 		$errores[] = 'El campo Nacionalidad es incorrecto.';
-	}
+	}*/
 	if (!validaCaracter($domicilio)){
 		$errores[] = 'El campo Domicilio es incorrecto.';
 	}
@@ -80,24 +90,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		<form action="documento.php" method="post">	
 			<fieldset>
+			
 			Apellido/s: <br> <input title="Ingrese Apellido/s" type="text" name="apellido"
-			pattern="[a-zA-Záéíóúñ\s]{2,50}" required/ ><br>
+			placeholder= "Ingrese Apellido/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" required/ ><br>
 			
 			Nombre/s: <br> <input title="Ingrese Nombre/s" type="text" name="nombre"
-			pattern="[a-zA-Záéíóúñ\s]{2,50}" required/><br>
+			placeholder="Ingrese Nombre/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" required/><br>
 			<label>		
 			Numero De Documento: <br> <input title="Ingrese Numero de Documento (8 digitos))"type="text"
-			name="numeroDocumento"
+			placeholder="Ingrese Numero de Documento" name="numeroDocumento"
 			pattern="[0-9]{6,8}" required/><br>
 			
 			Sexo: <br><label for="M">Masculino</label><input type="radio" name="Sexo" id="M" value="M" checked>
 			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="Femenino"><br>
-			Nacionalidad: <br><input title="Ingrese Nacionalidad" type="text"
-			       name="nacionalidad"
-			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
-			<br>	
-			Foto: <br><input title="Debe adjuntar archivo .jpg o .bmp"type="file" name="foto" >
-			<br>		
+			<br>
+			Nacionalidad: <select> <?php foreach ($nacionalidades as $nacionalidad){?>
+			<option value="<?php echo $nacionalidad;?>"><?php echo $nacionalidad;?></option>
+			<?php };?>
+			</select>
+			<br>
+			Archivos Externos del Ciudadano (Foto-Firma-Digito Pulgar): <br><input title="Debe adjuntar archivos .jpg o .bmp : Foto, Firma y Digito Pulgar " type="file" 
+			placeholder="Adjuntar archivo permitidos:.jpg o .bmp : Foto, Firma y Digito Pulgar "
+			multiple= true name="archivo" required/><br>		
 			Fecha De Expedicion:<br>
 			<input type="date" value="<?php $fechaActual=date('d-m-Y'); 
 			echo $fechaActual;?>" disabled=true />
@@ -109,23 +123,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			<br>
 			Domicilio: <br>
 			<input title="Debe ingresar Domicilio" type="text"
-				   name="domicilio"
+			placeholder="Ingrese Domicilio"	   name="domicilio"
 			pattern="[0-9a-zA-Záéíóúñ\s]{5,50}" required/>
 			<br>
 			Ciudad: <br>
 			<input title="Debe ingresar Ciudad" type="text"
-				   name="ciudad"
+			placeholder="Ingrese Ciudad"	   name="ciudad"
 			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
 			<br>
 			Departamento: <br>
 			<input title="Debe ingresar Departamento" type="text"
-				   name="departamento"
+			placeholder="Ingrese Departamento"	   name="departamento"
 			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
 			Provincia: <br>
-			<input title="Debe ingresar Provincia" type="text"
-				   name="provincia"
-			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
+			<select> <?php foreach ($provincias as $provincia){?>
+			<option value="<?php echo $provincia;?>"><?php echo $provincia;?></option>
+			<?php };?>
+			</select>
 			<br>
 			Fecha de Nacimiento: <br>
 			<select name="dia">
@@ -158,14 +173,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					}}
 					?>
 			</select>	
-			<br><br>		
-			<input title="Debe ingresar Fecha de Nacimiento" type="date"
-				   name="fechaNacimiento"
-			required/>
-			<br>
+			<br>			
 			Lugar de Nacimiento: <br>
 			<input title="Debe ingresar Lugar de Nacimiento" type="text"
-				   name="lugarNacimiento"
+			placeholder="Ingrese Lugar de Nacimiento"  name="lugarNacimiento"
 			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
 			<input type="submit" value="Enviar Datos">
