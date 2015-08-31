@@ -1,69 +1,45 @@
 <?php
 
+if (!isset($_SESSION)){
+	session_start();
+}
 header('Content-Type: text/html; charset=utf-8');
+require_once ('paravalidar.php');
 $nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
 $provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
 	'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
 	'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
 	'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
 	'Tierra del Fuego', 'Tucumán');
-require_once 'paravalidar.php';
 
-	
+
+/*
 $apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
 $nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
 $numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null;
 $sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null;
-//$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
-$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
+$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
+//$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
 $domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null;
 $ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
 $departamento= isset($_POST['departamento']) ? $_POST['departamento'] : null;
 $provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
 $fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
 $lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$opciones = array(
-		'options' => array(
-			'min_range' => 1000000,
-			'max_range' => 99999999
-			)
-	);
-	
-	
-	
-	if (!validaCaracter($apellido)){
-		$errores[] = 'El campo Apellido es incorrecto.';
-	}
-	if (!validanombre($nombre)){
-		$errores[] = 'El campo Nombre es incorrecto.';
-	}
-	
-	if (!validarNumero($numeroDocumento, $opciones)){
-		$errores[] = 'El campo Numero de Documento es incorrecto.';
-	}
-	/*if (!validaCaracter($nacionalidad)){
-		$errores[] = 'El campo Nacionalidad es incorrecto.';
-	}*/
-	if (!validaCaracter($domicilio)){
-		$errores[] = 'El campo Domicilio es incorrecto.';
-	}
-	if (!validaCaracter($ciudad)){
-		$errores[] = 'El campo Ciudad es incorrecto.';
-	}
-	if (!validaCaracter($departamento)){
-		$errores[] = 'El campo Departamento es incorrecto.';
-	}
-	if (!validaCaracter($provincia)){
-		$errores[] = 'El campo Provincia es incorrecto.';
-	}
-	
-	if (!$errores){
-		header('Location: validadook.php');
-		exit;
-	}
-}
+//
+if(isset($_SESSION["datos"])){
+	$apellido = @$_SESSION["datos"]["apellido"];
+	$nombre = @$_SESSION["datos"]["nombre"];
+	$numeroDocumento = @$_SESSION["datos"]["numeroDocumento"];
+	$sexo = @$_SESSION["datos"]["sexo"];
+	$nacionalidad = @$_SESSION["datos"]["nacionalidad"];
+	$domicilio = @$_SESSION["datos"]["domicilio"];
+	$ciudad = @$_SESSION["datos"]["ciudad"];
+	$departamento = @$_SESSION["datos"]["departamento"];
+	$provincia = @$_SESSION["datos"]["provincia"];
+	$fechaNacimiento = @$_SESSION["datos"]["fechaNacimiento"];
+	$lugarNacimiento = @$_SESSION["datos"]["lugarNacimiento"];
+}*/
 ?>	
 
 <!DOCTYPE html>
@@ -87,8 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		<h2>  REPUBLICA ARGENTINA - MERCOSUR
 		    DOCUMENTO NACIONAL DE IDENTIDAD
 		      REGISTRO NACIONAL DE LAS PERSONAS</h2>
-		
-		<form action="documento.php" method="post">	
+		<?php if(isset($errores)):?>
+			<?php foreach($errores as $err):?>
+				<p>* <?php echo $err;?>
+			<?php endforeach;?>
+		<?php endif;?>
+		<form action="paravalidar.php" method="post">	
 			<fieldset>
 			
 			Apellido/s: <br> <input title="Ingrese Apellido/s" type="text" name="apellido"
@@ -111,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			<br>
 			Archivos Externos del Ciudadano (Foto-Firma-Digito Pulgar): <br><input title="Debe adjuntar archivos .jpg o .bmp : Foto, Firma y Digito Pulgar " type="file" 
 			placeholder="Adjuntar archivo permitidos:.jpg o .bmp : Foto, Firma y Digito Pulgar "
-			multiple= true name="archivo" required/><br>		
+			multiple= true name="archivo" ><br>		
 			Fecha De Expedicion:<br>
 			<input type="date" value="<?php $fechaActual=date('d-m-Y'); 
 			echo $fechaActual;?>" disabled=true />
@@ -179,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			placeholder="Ingrese Lugar de Nacimiento"  name="lugarNacimiento"
 			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
 			<br>
-			<input type="submit" value="Enviar Datos">
+			<input type="submit" value="Enviar Datos" >
 			</fieldset>
 		</form>
 	

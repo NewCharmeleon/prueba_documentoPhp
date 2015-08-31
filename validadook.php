@@ -1,3 +1,11 @@
+<?php
+
+//if (!isset($_SESSION)){
+	session_start();
+//}
+header('Content-Type: text/html; charset=utf-8');
+//require ('paravalidar.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 <!--Desarrollar un formulario de ingreso de datos para un DNI.
@@ -15,6 +23,11 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	</head>
 	<body>
+	
 		<strong> Los datos se cargaron correctamente</strong>
+		<?php foreach ($_SESSION["datos"] as $dato){
+			echo $dato;
+		 } ?>	
+		<input class="btn btn-md btn-success" type="submit" value="Enviar">
 	</body>
 </html>
