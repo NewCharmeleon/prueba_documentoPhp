@@ -25,9 +25,12 @@ header('Content-Type: text/html; charset=utf-8');
 	<body>
 	
 		<strong> Los datos se cargaron correctamente</strong>
-		<?php foreach ($_SESSION["datos"] as $dato){
-			echo $dato;
-		 } ?>	
+		<?php if(isset($_SESSION["datos"])):?>
+		<?php	//echo ($_SESSION["datos"]["apellido"]);?>
+			<?php foreach($_SESSION["datos"] as $dato):?>
+				<p>* <?php echo $dato;?>
+			<?php endforeach;?>
+		<?php endif;?>	
 		<input class="btn btn-md btn-success" type="submit" value="Enviar">
 	</body>
 </html>

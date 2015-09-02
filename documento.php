@@ -72,21 +72,24 @@ if(isset($_SESSION["datos"])){
 			<fieldset>
 			
 			Apellido/s: <br> <input title="Ingrese Apellido/s" type="text" name="apellido"
-			placeholder= "Ingrese Apellido/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" required/ ><br>
+			placeholder= "Ingrese Apellido/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" 
+			value = "<?php echo $apellido;?>" required/ ><br>
 			
 			Nombre/s: <br> <input title="Ingrese Nombre/s" type="text" name="nombre"
-			placeholder="Ingrese Nombre/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" required/><br>
+			placeholder="Ingrese Nombre/s" pattern="[a-zA-Záéíóúñ\s]{2,50}" 
+			value = "<?php echo $nombre;?>" required/><br>
 			<label>		
 			Numero De Documento: <br> <input title="Ingrese Numero de Documento (8 digitos))"type="text"
 			placeholder="Ingrese Numero de Documento" name="numeroDocumento"
-			pattern="[0-9]{6,8}" required/><br>
+			pattern="[0-9]{6,8}"value = "<?php echo $numeroDocumento;?>"
+			required/><br>
 			
-			Sexo: <br><label for="M">Masculino</label><input type="radio" name="Sexo" id="M" value="M" checked>
-			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="Femenino"><br>
+			Sexo: <br><label for="M">Masculino</label><input type="radio" name="sexo" id="M" value="<?php echo $sexo;?>" >
+			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="<?php echo $sexo;?>"><br>
 			<br>
 			Nacionalidad: <select> <?php foreach ($nacionalidades as $nacionalidad){?>
 			<option value="<?php echo $nacionalidad;?>"><?php echo $nacionalidad;?></option>
-			<?php };?>
+			<?php };?>	
 			</select>
 			<br>
 			Archivos Externos del Ciudadano (Foto-Firma-Digito Pulgar): <br><input title="Debe adjuntar archivos .jpg o .bmp : Foto, Firma y Digito Pulgar " type="file" 
@@ -104,17 +107,20 @@ if(isset($_SESSION["datos"])){
 			Domicilio: <br>
 			<input title="Debe ingresar Domicilio" type="text"
 			placeholder="Ingrese Domicilio"	   name="domicilio"
-			pattern="[0-9a-zA-Záéíóúñ\s]{5,50}" required/>
+			pattern="[0-9a-zA-Záéíóúñ\s]{5,50}" value = "<?php echo $domicilio;?>"
+			required/>
 			<br>
 			Ciudad: <br>
 			<input title="Debe ingresar Ciudad" type="text"
 			placeholder="Ingrese Ciudad"	   name="ciudad"
-			pattern="[a-zA-Záéíóúñ]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ]{2,30}"	value = "<?php echo $ciudad;?>"
+			required/>
 			<br>
 			Departamento: <br>
 			<input title="Debe ingresar Departamento" type="text"
 			placeholder="Ingrese Departamento"	   name="departamento"
-			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" 	value = "<?php echo $departamento;?>"
+			required/>
 			<br>
 			Provincia: <br>
 			<select> <?php foreach ($provincias as $provincia){?>
@@ -157,7 +163,8 @@ if(isset($_SESSION["datos"])){
 			Lugar de Nacimiento: <br>
 			<input title="Debe ingresar Lugar de Nacimiento" type="text"
 			placeholder="Ingrese Lugar de Nacimiento"  name="lugarNacimiento"
-			pattern="[a-zA-Záéíóúñ\s]{2,30}" required/>
+			pattern="[a-zA-Záéíóúñ\s]{2,30}" 	value = "<?php echo $lugarNacimiento;?>"
+			required/>
 			<br>
 			<input type="submit" value="Enviar Datos" >
 			</fieldset>
