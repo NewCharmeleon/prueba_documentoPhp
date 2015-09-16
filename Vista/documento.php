@@ -30,7 +30,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-		<title>Formulario de validación de solicitud de Documento</title>
+		<title>Formulario de Datos del Documento</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="lib/css/bootstrap.css">
@@ -41,7 +41,28 @@
 		<h2>  REPUBLICA ARGENTINA - MERCOSUR
 		    DOCUMENTO NACIONAL DE IDENTIDAD
 		      REGISTRO NACIONAL DE LAS PERSONAS</h2>
-		
+		<form class="form-horizontal">
+<fieldset>
+
+	<!-- Form Name -->
+	<legend>Menu</legend>
+	
+	<a class="btn btn-success" href="busquedaNombre.html">Busqueda de Persona</a>
+	<a class="btn btn-danger" href="../index.php">Regresar al Inicio></a>
+	
+	
+	
+	<!-- Button (Double) 
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="button1id">Opciones</label>
+	  <div class="col-md-8">
+		<button id="button1id" name="button1id" class="btn btn-success" onClick="<a href="busquedaNombre.html></a>" Busqueda de Personas</button>
+		<button id="Regresar" name="Regresar" class="btn btn-danger" onClick="location.href = 'index.php' "> Inicio</button>
+	  </div>
+	</div>
+	-->
+	</fieldset>
+	</form>
 	<form action="../paravalidar.php" method="post" class="form-horizontal">
 		<fieldset>
 

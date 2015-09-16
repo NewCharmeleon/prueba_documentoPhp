@@ -1,14 +1,14 @@
 <?php
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=employees','root','123');
+    $pdo = new PDO('mysql:host=localhost;dbname=documento','Admin','Admin123');
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, TRUE);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->exec("SET NAMES UTF8");
     
 
-$apellido = isset($_GET['term']) ? $_GET['term'] : null;
-//falta validar, etc. etc.
+$apellido = isset($_GET['apellido']) ? $_GET['apellido'] : null;
+
 
 if(!$apellido)
 {
@@ -22,7 +22,7 @@ $sql =""
         . "select emp_no as id, "
         . "concat_ws(' ', first_name, last_name) as label, "
         . "concat_ws(' ', first_name, last_name) as value "
-        . "from employees.employees where upper(last_name) like :apellido limit 10";
+        . "from documento.persona where upper(last_name) like :apellido limit 10";
 $stmt = $pdo->prepare($sql);
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
