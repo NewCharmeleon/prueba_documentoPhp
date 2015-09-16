@@ -4,8 +4,17 @@
 ?>
 <link href="css/paginacion.css" type="text/css" rel="stylesheet">
 <?
-include('config/db.php');
-$conn=get_db_conn();
+include "controlador/conexionBBDD.php";
+try{
+	$conn= new PDO('mysql:host=localhost;dbname=documento',$usuario,$password);
+}catch(PDOException $e){
+					
+					echo "Usuario Incorrecto";
+					echo '<a href="../index.php";><br>Volver a Loguearse</br></a>';
+					throw new Exception($e->getMessage());
+				
+					
+	}
 
 //AL PRINCIPIO COMPRUEBO SI HICIERON CLICK EN ALGUNA PÁGINA
 if(isset($_GET['page'])){
@@ -16,14 +25,15 @@ if(isset($_GET['page'])){
 }
 
 //ACA SE SELECCIONAN TODOS LOS DATOS DE LA TABLA
-$consulta="SELECT * FROM peliculas";
-$datos=mysql_query($consulta,$conn);
+$sql="SELECT * FROM personas";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
 
 //MIRO CUANTOS DATOS FUERON DEVUELTOS
-$num_rows=mysql_num_rows($datos);
+$num_rows=$stmt->rowCount;
 
-//ACA SE DECIDE CUANTOS RESULTADOS MOSTRAR POR PÁGINA , EN EL EJEMPLO PONGO 15
-$rows_per_page= 15;
+//ACA SE DECIDE CUANTOS RESULTADOS MOSTRAR POR PÁGINA , EN EL EJEMPLO PONGO 10
+$rows_per_page= 10;
 
 //CALCULO LA ULTIMA PÁGINA
 $lastpage= ceil($num_rows / $rows_per_page);
@@ -41,20 +51,25 @@ if($page < 1){
 $limit= 'LIMIT'. ($page -1) * $rows_per_page . ',' .$rows_per_page;
 
 //REALIZO LA CONSULTA QUE VA A MOSTRAR LOS DATOS (ES LA ANTERIO + EL $limit)
-$consulta .=" $limit";
-$peliculas=mysql_query($consulta,$conn);
+$sql .=" $limit";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$personas= $stmt->fetch(PDO::FETCH_ASSOC);
 
-if(!$peliculas){
+if(!$personas){
         //SI FALLA LA CONSULTA MUESTRO ERROR
- die('Invalid query: ' . mysql_error());
-}else{
+	die();
+	}else{
       //SI ES CORRECTA MUESTRO LOS DATOS
       ?> <table><thead>
-        <tr><th>Título</th><th>Director</th><th> Año de producción</th></tr>
+        <tr><th>Apellido</th><th>Nombre</th><th> Numero de Documento</th></tr>
+		<tr><th>Sexo</th><th>Nacionalidad</th><th>
         </thead>
         <tbody>
-    <? while($row = mysql_fecth_assoc($peliculas)){  ?>
-        <tr><td><? echo $row['nombre']; ?> </td><td> <? echo $row['director']; ?> </td><td> <?echo $row['anio']; ?> </td></tr>
+    <? while($row = $stmt->fetch(PDO::FETCH_ASSOC)){  ?>
+        <tr><td><? echo $row['apellido']; ?> </td><td> <? echo $row['nombre']; ?> </td>
+		<td> <?echo $row['numero_documento']; ?> </td></tr>
+		<tr><td><? echo $row['sexo']; ?> </td><td> <? echo $row['nacionalidad']; ?>
        <?  } ?>
       </tbody>
       </table>
