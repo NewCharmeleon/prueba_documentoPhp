@@ -48,6 +48,7 @@
 	<legend>Menu</legend>
 	
 	<a class="btn btn-success" href="busquedaNombre.html">Busqueda de Persona</a>
+	<a class="btn btn-success" href="datosCargados.html">Ver Personas Cargadas</a>
 	<a class="btn btn-danger" href="../index.php">Regresar al Inicio></a>
 	
 	
