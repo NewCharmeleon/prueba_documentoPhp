@@ -1,16 +1,16 @@
 <?php
+<?php session_start();?>
+<?php error_reporting(E_ALL);
+ini_set("display_errors", true);?>
 
-if (!isset($_SESSION)){
-	session_start();
-}
 header('Content-Type: text/html; charset=utf-8');
 require_once ('paravalidar.php');
-$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
+/*$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
 $provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
 	'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
 	'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
 	'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
-	'Tierra del Fuego', 'Tucumán');
+	'Tierra del Fuego', 'Tucumán');*/
 
 
 /*
@@ -44,30 +44,30 @@ if(isset($_SESSION["datos"])){
 
 <!DOCTYPE html>
 <html lang="es">
-<!--Desarrollar un formulario de ingreso de datos para un DNI.
-- Aplicar todos los conocimientos previos: HTML5, CSS, Bootstrap, jQuery, etc.
-- Validar los datos ingresados DESDE PHP:
-- presencia (campos obligatorios)
-- formato (ej. sólo números)
-- reglas de negocio (ej. la fecha de vencimiento no puede ser menor o igual que la fecha de nacimiento y emisión).
-- Separar la lógica de la parte visual (archivos PHP separados, usar función require)
-- Si el formulario no es válido, redirigir al formulario mostrando el error correspondiente.
-- Si el formulario es válido, mostrar una nueva página con los datos ingresados.
-- Si se intenta "saltear" la validación (ej. acceder a la nueva página directamente) redirigir a la página inicial (función header)-->
 	<head>
 		<title>Formulario de validación de solicitud de Documento</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="lib/css/bootstrap.css">
 		<h2>Registro Nacional de las personas</h2>
 	</head>
 	<body>
+		<div class="jumbotron">
 		<h2>  REPUBLICA ARGENTINA - MERCOSUR
 		    DOCUMENTO NACIONAL DE IDENTIDAD
-		      REGISTRO NACIONAL DE LAS PERSONAS</h2>
+		      REGISTRO NACIONAL DE LAS PERSONAS</h2>nombre
+		<?php	echo ($_SESSION["datos"]["provincia"]);//?>
 		<?php if(isset($errores)):?>
 			<?php foreach($errores as $err):?>
 				<p>* <?php echo $err;?>
 			<?php endforeach;?>
 		<?php endif;?>
+		<?php if(isset($datos)):?>
+			<?php foreach($datos as $dato):?>
+				<p>* <?php echo $dato;?>
+			<?php endforeach;?>
+		<?php endif;?>
+	
 		<form action="paravalidar.php" method="post">	
 			<fieldset>
 			
@@ -84,23 +84,23 @@ if(isset($_SESSION["datos"])){
 			pattern="[0-9]{6,8}"value = "<?php echo $numeroDocumento;?>"
 			required/><br>
 			
-			Sexo: <br><label for="M">Masculino</label><input type="radio" name="sexo" id="M" value="<?php echo $sexo;?>" >
-			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="<?php echo $sexo;?>"><br>
+			Sexo: <br><label for="M">Masculino</label><input type="radio" name="sexo" id="M" value="Masculino"  >
+			<label for="F">Femenino</label><input type="radio" name="sexo" id="F" value="Femenino"><br>
 			<br>
-			Nacionalidad: <select> <?php foreach ($nacionalidades as $nacionalidad){?>
+			Nacionalidad: <select name="nacionalidad"> <?php foreach ($nacionalidades as $nacionalidad){?>
 			<option value="<?php echo $nacionalidad;?>"><?php echo $nacionalidad;?></option>
 			<?php };?>	
 			</select>
 			<br>
-			Archivos Externos del Ciudadano (Foto-Firma-Digito Pulgar): <br><input title="Debe adjuntar archivos .jpg o .bmp : Foto, Firma y Digito Pulgar " type="file" 
+			Archivos Externos del Ciudadano: (Foto-Firma-Digito Pulgar): <br><input title="Debe adjuntar archivos .jpg o .bmp : Foto, Firma y Digito Pulgar " type="file" 
 			placeholder="Adjuntar archivo permitidos:.jpg o .bmp : Foto, Firma y Digito Pulgar "
 			multiple= true name="archivo" ><br>		
 			Fecha De Expedicion:<br>
-			<input type="date" value="<?php $fechaActual=date('d-m-Y'); 
+			<input type="date" name="fechaActual"value="<?php $fechaActual=date('d-m-Y'); 
 			echo $fechaActual;?>" disabled=true />
 			<br>			
 			Fecha De Vencimiento: <br>
-			<input type="date"
+			<input type="date" name="fechaVenc"
 			       value="<?php $fechaVenc= date('d-m-Y',strtotime('+15 Year'));
 					echo $fechaVenc; ?>" disabled=true/>
 			<br>
@@ -123,7 +123,7 @@ if(isset($_SESSION["datos"])){
 			required/>
 			<br>
 			Provincia: <br>
-			<select> <?php foreach ($provincias as $provincia){?>
+			<select name="provincia"> <?php foreach ($provincias as $provincia){?>
 			<option value="<?php echo $provincia;?>"><?php echo $provincia;?></option>
 			<?php };?>
 			</select>
@@ -166,12 +166,13 @@ if(isset($_SESSION["datos"])){
 			pattern="[a-zA-Záéíóúñ\s]{2,30}" 	value = "<?php echo $lugarNacimiento;?>"
 			required/>
 			<br>
+			<input id="action" type="hidden" name="action" value="insert"/>
 			<input type="submit" value="Enviar Datos" >
 			</fieldset>
 		</form>
 	
 			
 
-
+	</div>
 	</body>
 </html>

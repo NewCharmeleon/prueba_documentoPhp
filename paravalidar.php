@@ -1,10 +1,16 @@
 <?php
 	//Verificacion de inicion de Sesion
-	if (!isset($_SESSION)){
-		session_start();
-}
+ if (empty($_POST)){
+	require_once 'Vista/documento.php';
+	}else{
+	session_start();	
+	header('Content-Type: text/html; charset=utf-8');
+	
 	//Creacion del arreglo de sesion datos 
-	$_SESSION["datos"] = Array();
+	include_once('funciones.php');
+	
+	
+	
 
 /* Validar los datos ingresados DESDE PHP:
 -- presencia (campos obligatorios)
@@ -14,143 +20,128 @@
 -- Si el formulario no es válido, redirigir al formulario mostrando el error correspondiente.
 -- Si el formulario es válido, mostrar una nueva página con los datos ingresados.
 -- Si se intenta "saltear" la validación (ej. acceder a la nueva página directamente) redirigir a la página inicial (función header)*/
+	$datos['apellido'] = filter_var($_POST['apellido'], FILTER_SANITIZE_STRING);
+	$datos['nombre'] = filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);
+	$datos['numeroDocumento'] = filter_var($_POST['numeroDocumento'], FILTER_VALIDATE_INT);
+	$datos['sexo'] = filter_var($_POST['sexo'], FILTER_SANITIZE_SPECIAL_CHARS);
+	$datos['nacionalidad'] = isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
+	$datos['archivo'] = isset($_POST['archivo']) ? $_POST['archivo'] : null;
+	$datos['fechaActual']=date("Y/m/d");
+	$datos['fechaVenc']=date("'d-m-Y',strtotime('+15 Year')");
+	$datos['domicilio'] = filter_var($_POST['domicilio'], FILTER_SANITIZE_STRING);
+	$datos['ciudad']= filter_var($_POST['ciudad'], FILTER_SANITIZE_STRING);
+	$datos['departamento']= filter_var($_POST['departamento'], FILTER_SANITIZE_STRING);
 	
-	//Funcion php que validad que el campo este seteado y que no este vacio
-	function validarvacio($valor){ 
-		if(isset($valor) && empty($valor)){
-			return false;
-		}else{
-			return true;
-		}
-	}
-	//Funcion php que valida que el numero ingresado sea entero
-	function validarNumero($valor, $opciones=null){
-		if(filter_var($valor,FILTER_VALIDATE_INT, $opciones) === FALSE){
-			return false;
-		}else{
-			return true;
-		}
-	}	
-	//Funcion php que valida que el caracter ingresado sea el permitido 
-	//permitiendo el ingreso de palabras compuestas
-	function validarCaracter($valor)	{
-		$permitidos =  '/^[a-zA-Záéíóúñ\s]{2,50}$/i';
-		if (preg_match($permitidos,$valor)){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	function validarAlfanumerico($valor)	{
-		$permitidosalpha =  '/^[a-zA-Záéíóúñ\s+0-9]{2,50}$/i';
-		if (preg_match($permitidosalpha,$valor)){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	//Funcion php que valida que el tipo de archivo externo sea de formato valido
-	//solo imagen.
-	function restringirTiposDeArchivosExternos($mime_types){
-		$mime_types = array(
-			'jpg|jpeg|jpe' => 'image/jpeg',
-			'bmp' => 'image/bmp'
-			);
-			return $mime_types;
-		}
-		//add_filter('upload_mimes', 'restrict_mime_type_list');
+	$datos['provincia']= isset($_POST['provincia']) ? $_POST['provincia'] : null;
+	$datos['fechaNacimiento'] =date($_POST['anio']."/".$_POST['mes']."/".$_POST['dia']);
+	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
-	//Verificacion de los ratos recibidos por POST del documento
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-		//Creacion del arreglo de opciones para la validacion 
+	$_SESSION["datos"] = Array();
+		$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
+		$provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
+		'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
+		'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
+		'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
+		'Tierra del Fuego', 'Tucumán');
+		
 		$opciones = array(
 			'options' => array(
 				'min_range' => 1000000,
 				'max_range' => 99999999
 			)
 		);
-		//Verificacion del seteo de las variables ingresadas sino es asi le asigna "null"
-		$apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
-		$nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
-		$numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null;
-		$sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null;
-		$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
-		//$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
-		$domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null;
-		$ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
-		$departamento= isset($_POST['departamento']) ? $_POST['departamento'] : null;
-		$provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
-		$fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
-		$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
+	
+	//Verificacion de los ratos recibidos por POST del documento
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		//Creacion del arreglo de opciones para la validacion 
 		
+		
+		/*foreach($_POST as $nombre_campo => $valor){ 
+			
+				$asignacion = "\$" . $nombre_campo . "='" . $valor . "';";
+				eval($asignacion); 
+		}*/
+		//verificarSeteo();
+		//Verificacion del seteo de las variables ingresadas sino es asi le asigna "null"
+		/*$validos = array(
+		($usuario= isset($_POST['usuario']) ? $_POST['usuario'] : null),
+		//$clave= isset($_POST['clave']) ? $_POST['clave'] : null;
+		
+		($apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null),
+		($nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null),
+		($numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null),
+		($sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null),
+		($nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null),
+		//$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
+		($domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null),
+		($ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null),
+		($departamento= isset($_POST['departamento']) ? $_POST['departamento'] : null),
+		($provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null),
+		($fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null),
+		($lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null),
+		);*/
 		//Segunda validacion que verifica si los datos ingresados contienen los caracteres permitidos
-		if (!validarCaracter($apellido)){
-			$errores[] = 'El campo Apellido es incorrecto.';
+		/*if (!validarUsuario($usuario)){
+			$errores_validacion[] = 'El campo Usuario ingresado es incorrecto.';
 		}else{
-			$_SESSION["datos"]["apellido"] = $apellido;
+			$_SESSION["datos"]["usuario"] = $usuario;
+		}*/
+							
+		if (!validarCaracter($datos['apellido'])){
+			$errores[] = 'El campo Apellido es incorrecto.';
 		}
 	
-		if (!validarCaracter($nombre)){
+		if (!validarCaracter($datos['nombre'])){
 			$errores[] = 'El campo Nombre es incorrecto.';
 		}
-		else{
-			$_SESSION["datos"]["nombre"] = $nombre;
-		}
-		if (!validarNumero($numeroDocumento, $opciones)){
+		
+		if (!validarNumero($datos['numeroDocumento'], $opciones)){
 			$errores[] = 'El campo Numero de Documento es incorrecto.';
-		}else{
-			$_SESSION["datos"]["numeroDocumento"] = $numeroDocumento;
 		}
 		//verificacion de seteo de option select en html
-		if ((!isset($sexo))&&(empty($sexo))){
+		if ((!isset($sexo))&&($sexo=null)){
 			$errores[] = 'El campo Sexo no ha sido seleccionado.';
-		}else{
-			$_SESSION["datos"]["sexo"] = $sexo;
 		}
 			
-		if ((!isset($nacionalidad)) && (empty($nacionalidad))){
+		if ((!isset($nacionalidad)) || ($nacionalidad=null)){
 			$errores[] = 'El campo Nacionalidad no ha sido seleccionado.';
-		}else{
-			$_SESSION["datos"]["nacionalidad"] = $nacionalidad;
 		}
 		
-		if (!validarAlfanumerico($domicilio)){
+		if (!validarAlfanumerico($datos['domicilio'])){
 			$errores[] = 'El campo Domicilio es incorrecto.';
-		}else{
-			$_SESSION["datos"]["domicilio"] = $domicilio;
 		}
-		if (!validarCaracter($ciudad)){
+		if (!validarCaracter($datos['ciudad'])){
 			$errores[] = 'El campo Ciudad es incorrecto.';
-		}else{
-			$_SESSION["datos"]["ciudad"] = $ciudad;
 		}
-		if (!validarCaracter($departamento)){
+		if (!validarCaracter($datos['departamento'])){
 			$errores[] = 'El campo Departamento es incorrecto.';
-		}else{
-			$_SESSION["datos"]["departamento"] = $departamento;
 		}
-		if ((!isset($provincia)) && (empty($provincia))){
+		if ((!isset($provincia)) || ($provincia=null)){
 			$errores[] = 'El campo Provincia no ha sido seleccionado.';
-		}else{
-			$_SESSION["datos"]["provincia"] = $provincia;
 		}
-		if ((!isset($fechaNacimiento)) && (empty($fechaNacimiento))){
-			$errores[] = 'El campo Fecha de Nacimiento seleccionado es incorrecto.';
-		}else{
-			$_SESSION["datos"]["fechaNacimiento"] = $fechaNacimiento;
+		if ((!isset($fechaNacimiento)) && ($fechaNacimiento=null)){
+			$errores[] = 'La Fecha de Nacimiento seleccionada es incorrecta.';
 		}
-		if (!validarCaracter($lugarNacimiento)){
+		if (!validarCaracter($datos['lugarNacimiento'])){
 			$errores[] = 'El campo Lugar de Nacimiento es incorrecto.';
-		}else{
-			$_SESSION["datos"]["lugarNacimiento"] = $lugarNacimiento;
 		}
+	}	
 	//Verificacion de la existencia de errores, en caso afirmativo redirige a la pagina original, caso contrario dirige a la pagina de validacion ok.
-	if (!$errores){
+	
+	 if (empty($errores)){
 		 	
-		header('Location: validadook.php');
+		header('Location: Vista/validadook.php');
 		exit;
 	}else{
-		require_once 'documento.php';
+		if ($errores): ?>
+		   <ul style="color: #f00;">
+          <?php foreach ($errores as $error): ?>
+             <li> <?php echo $error ?> </li>
+          <?php endforeach; ?>
+       </ul>
+       <?php endif;
+		require_once 'Vista/documento.php';
 		exit;
 	}
-}
+	}	?>
+	
