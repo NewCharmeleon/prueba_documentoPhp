@@ -1,9 +1,9 @@
 
 <?php 
-	session_start();
+ 	session_start();
 	error_reporting(E_ALL);
 	ini_set("display_errors", true);
-	include "controlador/conexionBBDD.php"
+	include "controlador/conexionBBDD.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
 		      REGISTRO NACIONAL DE LAS PERSONAS</center></h2>
 		
 		
-		<form action="controlador/conexionBBDD.php" method="post" role="form">	
+                    <form action="/prueba_documentoPhp/controlador/conexionBBDD.php" method="post" role="form">	
 			<center><fieldset>
 			
 				Usuario: <br> <input title="Ingrese Usuario" type="text" name="usuario" id="usuario"
@@ -33,7 +33,7 @@
 			
 				Clave: <br> <input title="Ingrese Clave" type="text" name="password" id="password"
 				placeholder= "Ingrese Clave" pattern="[a-zA-Z\s0-9]{8,8}" 
-				value = "***" required/ ><br>
+				value = "********" required/ ><br>
 				
 				<input id="action" type="hidden" name="action" value="login"/>
 				<center><button class="btn btn-primary btn-block" type="submit">"Acceder al Sistema"</center

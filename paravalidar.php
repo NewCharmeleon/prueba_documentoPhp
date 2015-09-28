@@ -1,7 +1,9 @@
 <?php
 	//Verificacion de inicion de Sesion
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set("display_errors", true);
  if (empty($_POST)){
-	require_once 'Vista/documento.php';
+	require_once '/prueba_documentoPhp/vista/documento.php';
 	}else{
 	session_start();	
 	header('Content-Type: text/html; charset=utf-8');
@@ -9,7 +11,7 @@
 	//Creacion del arreglo de sesion datos 
 	include_once('funciones.php');
 	
-	
+	$_POST["datos"] = Array();
 	
 
 /* Validar los datos ingresados DESDE PHP:
@@ -36,7 +38,7 @@
 	$datos['fechaNacimiento'] =date($_POST['anio']."/".$_POST['mes']."/".$_POST['dia']);
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
-	$_SESSION["datos"] = Array();
+	
 		$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
 		$provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
 		'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
@@ -99,11 +101,11 @@
 			$errores[] = 'El campo Numero de Documento es incorrecto.';
 		}
 		//verificacion de seteo de option select en html
-		if ((!isset($sexo))&&($sexo=null)){
+		if ((!isset($datos['sexo']) ||($datos['sexo'])==null)){
 			$errores[] = 'El campo Sexo no ha sido seleccionado.';
 		}
 			
-		if ((!isset($nacionalidad)) || ($nacionalidad=null)){
+		if ((!isset($datos['nacionalidad']) || ($datos['nacionalidad'])==null)){
 			$errores[] = 'El campo Nacionalidad no ha sido seleccionado.';
 		}
 		
@@ -116,10 +118,10 @@
 		if (!validarCaracter($datos['departamento'])){
 			$errores[] = 'El campo Departamento es incorrecto.';
 		}
-		if ((!isset($provincia)) || ($provincia=null)){
+		if ((!isset($datos['provincia']) || ($datos['provincia'])==null)){
 			$errores[] = 'El campo Provincia no ha sido seleccionado.';
 		}
-		if ((!isset($fechaNacimiento)) && ($fechaNacimiento=null)){
+		if ((!isset($datos['fechaNacimiento']) || ($datos['fechaNacimiento'])==null)){
 			$errores[] = 'La Fecha de Nacimiento seleccionada es incorrecta.';
 		}
 		if (!validarCaracter($datos['lugarNacimiento'])){
@@ -129,8 +131,8 @@
 	//Verificacion de la existencia de errores, en caso afirmativo redirige a la pagina original, caso contrario dirige a la pagina de validacion ok.
 	
 	 if (empty($errores)){
-		 	
-		header('Location: Vista/validadook.php');
+		
+		require 'validadook.php';
 		exit;
 	}else{
 		if ($errores): ?>
@@ -140,7 +142,7 @@
           <?php endforeach; ?>
        </ul>
        <?php endif;
-		require_once 'Vista/documento.php';
+		require_once 'vista/documento.php';
 		exit;
 	}
 	}	?>

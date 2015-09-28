@@ -1,6 +1,22 @@
 <?php
 //Funcion que verifica si las variables POST han sido seteadas.
-function verificarSeteo(){
+/*function verificarSeteo(){
+        
+        $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : null;
+	$nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
+	$numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null;
+	$sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null;
+	$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
+	$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
+	$domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null;
+	$ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
+	$departamento= isset($_POST['departamento']) ? $_POST['departamento'] : null;
+	$provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
+	$fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
+	$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
+       
+}*/
+function verificarDatos(){
 	
 	$datos['apellido'] = filter_var($_POST['apellido'], FILTER_SANITIZE_STRING);
 	$datos['nombre'] = filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);
@@ -18,10 +34,8 @@ function verificarSeteo(){
 	$datos['fechaNacimiento'] =date($_POST['anio']."/".$_POST['mes']."/".$_POST['dia']);
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
-
-
-	
 }
+
 //Funcion php que validad que el campo este seteado y que no este vacio
 	function validarvacio($valor){ 
 		if(isset($valor) && empty($valor)){
@@ -86,4 +100,30 @@ function verificarSeteo(){
 			return $mime_types;
 		}
 		//add_filter('upload_mimes', 'restrict_mime_type_list');
-	?>
+	
+                
+                
+                
+        function redirigirPagina($num,$url){
+             static $http = array (
+                100 => "HTTP/1.1 100 Continue",
+                200 => "HTTP/1.1 200 OK",
+                300 => "HTTP/1.1 300 Multiple Choices",
+                301 => "HTTP/1.1 301 Moved Permanently",
+                302 => "HTTP/1.1 302 Found",
+                400 => "HTTP/1.1 400 Bad Request",
+                401 => "HTTP/1.1 401 Unauthorized",
+                403 => "HTTP/1.1 403 Forbidden",
+                404 => "HTTP/1.1 404 Not Found",
+                500 => "HTTP/1.1 500 Internal Server Error",
+                501 => "HTTP/1.1 501 Not Implemented",
+                502 => "HTTP/1.1 502 Bad Gateway",
+                503 => "HTTP/1.1 503 Service Unavailable",
+                504 => "HTTP/1.1 504 Gateway Time-out"
+            );
+   header($http[$num]);
+   header ("Location: $url");
+}
+
+?>
+        

@@ -1,6 +1,5 @@
 <?php
-
-if (!isset($_SESSION)){
+if (!isset($_POST)){
 	session_start();
 }
 header('Content-Type: text/html; charset=utf-8');
@@ -15,18 +14,14 @@ require ('paravalidar.php');
 	<body>
 	
 		<strong> Los datos se ingresaron correctamente</strong>
-		<?php //if(isset($_SESSION["datos"])):?>
+		<?php if(isset($_POST["datos"])):?>
 		<?php	//echo ($_SESSION["datos"]["apellido"]);?>
 		<?php	//echo ($_SESSION["datos"]["provincia"]);?>
-			<?php //foreach($_SESSION["datos"] as $dato):?>
-				<p>* <?php //echo $dato;?>
-			<?php //endforeach;?>
-		<?php //endif;?>	
-		<?php if(isset($datos)):?>
-			<?php foreach($datos as $val):?>
-				<p>* <?php echo $val;?>
+			<?php foreach($_POST["datos"] as $dato):?>
+				<p>* <?php echo $dato;?>
 			<?php endforeach;?>
-		<?php endif;?>
+		<?php endif;?>	
+		
 		<input class="btn btn-md btn-success" type="submit" value="Cargar Datos">
 	</body>
 </html>

@@ -15,10 +15,10 @@ header('Content-Type: text/html; charset=utf-8');
 	<body>
 	
 		<strong> Los datos se ingresaron correctamente</strong>
-		<?php if(isset($_SESSION["datos"])):?>
+		<?php if(isset($_POST["datos"])):?>
 		<?php	//echo ($_SESSION["datos"]["apellido"]);?>
 		<?php	//echo ($_SESSION["datos"]["provincia"]);?>
-			<?php foreach($_SESSION["datos"] as $dato):?>
+			<?php foreach($_POST["datos"] as $dato):?>
 				<p>* <?php echo $dato;?>
 			<?php endforeach;?>
 		<?php endif;?>	

@@ -1,16 +1,20 @@
 
 <?php
-	if (!isset($_SESSION)){
+    error_reporting(E_ALL & ~E_NOTICE);
+    ini_set("display_errors", true);	
+    if (!isset($_POST)){
 	session_start();}
-	error_reporting(E_ALL);
-	ini_set("display_errors", true);
+	header('Content-Type: text/html; charset=utf-8');
 	
  /*if (!isset($_SESSION)){
 		session_start();
 }?>
 <?php error_reporting(E_ALL);
 	ini_set("display_errors", true);*/?>
-<?php
+<?php //include("../funciones.php");?>
+<?php //include "controlador/conexionBBDD.php";?>
+
+<?php/*
 	header('Content-Type: text/html; charset=utf-8');
 	$apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
 	$nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
@@ -24,7 +28,7 @@
 	$provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
 	$fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
 	$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
-
+*/verificarDatos();
 ?>	
 
 <!DOCTYPE html>
@@ -64,7 +68,7 @@
 	-->
 	</fieldset>
 	</form>
-	<form action="../paravalidar.php" method="post" class="form-horizontal">
+	<form action="/prueba_documentoPhp/paravalidar.php" method="post" class="form-horizontal">
 		<fieldset>
 
 			<!-- Form Name -->
@@ -75,7 +79,7 @@
 				<label class="col-md-4 control-label" for="apellido">Apellido/s: </label>  
 					<div class="col-md-4">
 						<input title="Ingrese Apellido/s" id="apellido" name="apellido" type="text" placeholder="Ingrese Apellido/s" class="form-control input-md"
-							pattern="[a-zA-Záéíóúñ\s]{2,50}" value = "<?php echo $apellido;?>" required >
+							pattern="[a-zA-Záéíóúñ\s]{2,50}" value = "<?php echo isset($_SESSION['apellido'])?$_SESSION['apellido']:null?>" required >
 						<span class="help-block"></span>  
 					</div>
 			</div>
@@ -198,14 +202,13 @@
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="provincia">Provincia:</label>
 				  <div class="col-md-4">
-					<select id="provincia" name="provincia class="form-control"><?php foreach ($provincias as $provincia){?>
+					<select id="provincia" name="provincia" class="form-control"><?php foreach ($provincias as $provincia){?>
 							<option value="<?php echo $provincia;?>"><?php echo $provincia;?></option>
 							<?php };?>
 					</select>
 				  </div>
 				</div>
-
-				<!-- Select Basic-->
+                                <!-- Select Basic-->
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento: </label>  
 				  <div class="col-md-4">
