@@ -16,7 +16,20 @@
 	$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
        
 }*/
+function crearArrays1(){
+    $nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
+    
+}
+function crearArrays2(){
+    
+    $provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
+    'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
+    'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
+    'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
+    'Tierra del Fuego', 'Tucumán');
+}
 function verificarDatos(){
+       
 	
 	$datos['apellido'] = filter_var($_POST['apellido'], FILTER_SANITIZE_STRING);
 	$datos['nombre'] = filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);

@@ -12,6 +12,7 @@ ini_set("display_errors", true);
 	include_once('funciones.php');
 	
 	$_POST["datos"] = Array();
+        verificarDatos();
 	
 
 /* Validar los datos ingresados DESDE PHP:
@@ -39,19 +40,7 @@ ini_set("display_errors", true);
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
 	
-		$nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
-		$provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
-		'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
-		'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
-		'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
-		'Tierra del Fuego', 'Tucumán');
 		
-		$opciones = array(
-			'options' => array(
-				'min_range' => 1000000,
-				'max_range' => 99999999
-			)
-		);
 	
 	//Verificacion de los ratos recibidos por POST del documento
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){

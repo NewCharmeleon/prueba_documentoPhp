@@ -11,7 +11,7 @@
 }?>
 <?php error_reporting(E_ALL);
 	ini_set("display_errors", true);*/?>
-<?php //include("../funciones.php");?>
+<?php// include("../paravalidar.php");?>
 <?php //include "controlador/conexionBBDD.php";?>
 
 <?php/*
@@ -28,7 +28,11 @@
 	$provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
 	$fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
 	$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
-*/verificarDatos();
+*/
+//$pdo = conectaBBDD($usuario, $password);
+crearArrays1();
+crearArrays2();
+//verificarDatos();
 ?>	
 
 <!DOCTYPE html>
@@ -37,7 +41,7 @@
 		<title>Formulario de Datos del Documento</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="lib/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../lib/css/bootstrap.css">
 		<h2>Registro Nacional de las personas</h2>
 	</head>
 	<body>
@@ -51,11 +55,12 @@
 	<!-- Form Name -->
 	<legend>Menu</legend>
 	
-	<a class="btn btn-success" href="busquedaNombre.html">Busqueda de Persona</a>
+        <a class="btn btn-success" href="busquedaNombre.php">Busqueda de Persona</a>
+	<a class="btn btn-success" href="busquedaAvanzada.html">Busqueda de Persona avanzada</a>
 	<a class="btn btn-success" href="datosCargados.html">Ver Personas Cargadas</a>
 	<a class="btn btn-danger" href="../index.php">Regresar al Inicio></a>
 	
-	
+	<?php //crearArrays();?>
 	
 	<!-- Button (Double) 
 	<div class="form-group">
@@ -128,6 +133,7 @@
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="nacionalidad">Nacionalidad:</label>
 				  <div class="col-md-4">
+                                      <?php $nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");?>
 					<select id="nacionalidad" name="nacionalidad" class="form-control" ><?php foreach ($nacionalidades as $nacionalidad){?>
 							<option value="<?php echo $nacionalidad;?>"><?php echo $nacionalidad;?></option>
 							<?php };?>
@@ -202,6 +208,11 @@
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="provincia">Provincia:</label>
 				  <div class="col-md-4">
+                                      <?php $provincias = array('Seleccione una provincia: ', 'Buenos Aires', 'Catamarca', 
+                                            'Chaco','Chubut','Córdoba', 'Corrientes', 'Entre Ríos', 'Formosa', 'Jujuy', 
+                                            'La Pampa','La Rioja', 'Mendoza', 'Misiones', 'Neuquén', 'Río Negro', 'Salta',
+                                            'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
+                                            'Tierra del Fuego', 'Tucumán'); ?>
 					<select id="provincia" name="provincia" class="form-control"><?php foreach ($provincias as $provincia){?>
 							<option value="<?php echo $provincia;?>"><?php echo $provincia;?></option>
 							<?php };?>
@@ -255,7 +266,7 @@
 				  <span class="help-block"></span>  
 				  </div>
 				</div>
-				<input id="action" type="hidden" name="action" value="insert"/>
+				<input id="action" type="hidden" name="action" value="insert" />
 					<input type="submit" value="Enviar Datos" >
 			</fieldset>
 			</form>

@@ -2,7 +2,7 @@
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", true);
-include "controlador/conexionBBDD.php";
+//include "controlador/conexionBBDD.php";
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ include "controlador/conexionBBDD.php";
 
                                 Busqueda por Nombre: <br> <input title="Ingrese Nombre a buscar" type="text" name="busqueda" id="busqueda"
                                                                  placeholder= "Ingrese Nombre" pattern="[a-zA-Z]{4,20}" 
-                                                                 value = "" required/ > <br><br>
+                                                                 value = "" required /> <br><br>
 
                                 <input id="action" type="hidden" name="busqueda" value="busqueda"/>
                                 <center><button class="btn btn-primary btn-block" type="submit">"Buscar Datos por Nombre</center>
