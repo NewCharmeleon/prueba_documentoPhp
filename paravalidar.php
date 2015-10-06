@@ -3,15 +3,15 @@
 error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors", true);
  if (empty($_POST)){
-	require_once '/prueba_documentoPhp/vista/documento.php';
+	require_once __DIR__.'/vista/documento.php';
 	}else{
 	session_start();	
 	header('Content-Type: text/html; charset=utf-8');
 	
 	//Creacion del arreglo de sesion datos 
-	include_once('funciones.php');
+	require_once('funciones.php');
 	
-	$_POST["datos"] = Array();
+	//$_POST["datos"] = Array();
         verificarDatos();
 	
 
@@ -30,13 +30,15 @@ ini_set("display_errors", true);
 	$datos['nacionalidad'] = isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
 	$datos['archivo'] = isset($_POST['archivo']) ? $_POST['archivo'] : null;
 	$datos['fechaActual']=date("Y/m/d");
-	$datos['fechaVenc']=date("'d-m-Y',strtotime('+15 Year')");
+        $anio=(15+date("Y")); 
+	$datos['fechaVenc']=date("$anio/m/d");
 	$datos['domicilio'] = filter_var($_POST['domicilio'], FILTER_SANITIZE_STRING);
 	$datos['ciudad']= filter_var($_POST['ciudad'], FILTER_SANITIZE_STRING);
 	$datos['departamento']= filter_var($_POST['departamento'], FILTER_SANITIZE_STRING);
 	
 	$datos['provincia']= isset($_POST['provincia']) ? $_POST['provincia'] : null;
-	$datos['fechaNacimiento'] =date($_POST['anio']."/".$_POST['mes']."/".$_POST['dia']);
+	$datos['fechaNacimiento'] =isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
+	
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
 	
@@ -131,7 +133,7 @@ ini_set("display_errors", true);
           <?php endforeach; ?>
        </ul>
        <?php endif;
-		require_once 'vista/documento.php';
+		require 'vista/documento.php';
 		exit;
 	}
 	}	?>

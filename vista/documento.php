@@ -8,12 +8,11 @@
 	
  /*if (!isset($_SESSION)){
 		session_start();
-}?>
-<?php error_reporting(E_ALL);
-	ini_set("display_errors", true);*/?>
-<?php// include("../paravalidar.php");?>
-<?php //include "controlador/conexionBBDD.php";?>
-
+ error_reporting(E_ALL);
+	ini_set("display_errors", true);*/
+include_once '../paravalidar.php';
+include '../controlador/conectarBBDD.php';
+?>
 <?php/*
 	header('Content-Type: text/html; charset=utf-8');
 	$apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
@@ -33,7 +32,7 @@
 crearArrays1();
 crearArrays2();
 //verificarDatos();
-?>	
+*/?>	
 
 <!DOCTYPE html>
 <html lang="es">
@@ -57,8 +56,8 @@ crearArrays2();
 	
         <a class="btn btn-success" href="busquedaNombre.php">Busqueda de Persona</a>
 	<a class="btn btn-success" href="busquedaAvanzada.html">Busqueda de Persona avanzada</a>
-	<a class="btn btn-success" href="datosCargados.html">Ver Personas Cargadas</a>
-	<a class="btn btn-danger" href="../index.php">Regresar al Inicio></a>
+	<a class="btn btn-success" href="../verPersonasCargadas.php">Ver Personas Cargadas</a>
+	<a class="btn btn-danger" href="../index.php">Regresar al Inicio</a>
 	
 	<?php //crearArrays();?>
 	
@@ -73,7 +72,7 @@ crearArrays2();
 	-->
 	</fieldset>
 	</form>
-	<form action="/prueba_documentoPhp/paravalidar.php" method="post" class="form-horizontal">
+	<form action="" method="post" class="form-horizontal">
 		<fieldset>
 
 			<!-- Form Name -->
@@ -103,7 +102,7 @@ crearArrays2();
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="numeroDocumento">Numero De Documento:</label>  
 						<div class="col-md-4">
-							<input title="Ingrese Numero de Documento (8 digitos))" id="numeroDocumento" name="numeroDocumento" type="text" 
+							<input title="Ingrese Numero de Documento (8 digitos))" id="numeroDocumento" name="numeroDocumento" type="number" 
 								placeholder="Ingrese Numero de Documento" pattern="[0-9]{6,8}"value = "<?php echo $numeroDocumento;?>"
 								required class="form-control input-md">
 							<span class="help-block"></span>  
@@ -154,7 +153,7 @@ crearArrays2();
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="fechaActual">Fecha De Expedicion:</label>  
 				  <div class="col-md-4">
-				  <input id="fechaActual" name="fechaActual" type="date" name="fechaActual"value="<?php $fechaActual=date('d-m-Y'); 
+				  <input id="fechaActual" name="fechaActual" type="date" name="fechaActual"value="<?php $fechaActual=date("Y-m-d"); 
 							echo $fechaActual;?>" disabled=true class="form-control input-md">
 				  <span class="help-block"></span>  
 				  </div>
@@ -165,7 +164,13 @@ crearArrays2();
 				  <label class="col-md-4 control-label" for="fechaVenc">Fecha De Vencimiento:</label>  
 				  <div class="col-md-4">
 				  <input id="fechaVenc" name="fechaVenc" type="date" name="fechaVenc"
-								   value="<?php $fechaVenc= date('d-m-Y',strtotime('+15 Year'));
+								   value="<?php 
+                                                                   $anio=(15+date("Y"));        
+                                                                   $fechaVenc=date("$anio-m-d");
+                                                                           // 
+                                                                           // / $fechaVenc=date('d-m-Y');
+                                                                            //$fechaVenc= strtotime("'$fechaVenc'+15 years");
+                                                                           // $fechaVenc= date ('d-m-Y', $fechaVenc);
 									echo $fechaVenc; ?>" disabled=true class="form-control input-md">
 				  <span class="help-block"></span>  
 				  </div>
@@ -223,36 +228,38 @@ crearArrays2();
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento: </label>  
 				  <div class="col-md-4">
-				 <select name="dia">
-								<?php
+                                      <input type="date" name="fechaNacimiento" class="form-control" 
+                                             placeholder="Fecha de Nacimiento" value="<?php $fechaNacimiento; ?>" class="form-control input-md">
+<!-- <select name="dia">
+								<?php/*
 									for ($i=1; $i<=31; $i++){
 										if($i==date('d')){
 											echo '<option value="'.$i.'" selected>'.$i.'</option>';
 										}else{
 											echo '<option value="'.$i.'">'.$i.'</option>';
 									}}
-								?>
+								*/?>
 							</select>	
 							<select name="mes">
-								<?php
+								<?php/*
 									for ($i=1; $i<=12; $i++){
 										if($i==date('m')){
 											echo '<option value="'.$i.'" selected>'.$i.'</option>';
 										}else{
 											echo '<option value="'.$i.'">'.$i.'</option>';
 									}}
-									?>
+									*/?>
 							</select>	
 							<select name="anio">
-								<?php
+								<?php/*
 									for ($i=date('o'); $i>=1900; $i--){
 										if($i==date('o')){
 											echo '<option value="'.$i.'" selected>'.$i.'</option>';
 										}else{
 											echo '<option value="'.$i.'">'.$i.'</option>';
 									}}
-									?>
-							</select>	  
+								*/?>	
+							</select>-->   	  
 				  </div>
 				</div>
 
@@ -266,8 +273,8 @@ crearArrays2();
 				  <span class="help-block"></span>  
 				  </div>
 				</div>
-				<input id="action" type="hidden" name="action" value="insert" />
-					<input type="submit" value="Enviar Datos" >
+				 <!-- <input id="action" type="hidden" name="action" value="insert" />-->
+					<button type="submit" class="btn btn-primary">Enviar Datos</button>
 			</fieldset>
 			</form>
 		</div>

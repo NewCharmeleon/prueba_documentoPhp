@@ -1,10 +1,10 @@
 <?php
 if (!isset($_POST)){
-	session_start();
+	//session_start();
 }
 header('Content-Type: text/html; charset=utf-8');
-require ('paravalidar.php');
-require_once "controlador/conectarBBDD.php";
+require_once '../controlador/conectarBBDD.php';
+//require_once "controlador/conectarBBDD.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,6 +16,11 @@ require_once "controlador/conectarBBDD.php";
 	
 		<strong> Los datos se ingresaron correctamente</strong>
 		<?php if(isset($datos)):?>
+                 <?php 
+                   $pdo = conectaBBDD();
+                   // die("gikakk");
+                   $pdo = insertarDatos($pdo,$datos);
+		?>
 		<?php	//echo ($_SESSION["datos"]["apellido"]);?>
 		<?php	//echo ($_SESSION["datos"]["provincia"]);?>
 			<?php foreach($datos as $dato):?>
@@ -23,8 +28,9 @@ require_once "controlador/conectarBBDD.php";
 			<?php endforeach;?>
 		<?php endif;?>	
                  <?php 
-                    $pdo = conectaBBDD($usuario,$password);
-                    $pdo = insertarDatos($pdo,$datos);
+                   // $pdo = conectaBBDD();
+                  //  die("gikakk");
+                   // $pdo = insertarDatos($conn,$datos);
 		?>
 		<input class="btn btn-md btn-success" type="submit" value="Cargar Datos">
 	</body>

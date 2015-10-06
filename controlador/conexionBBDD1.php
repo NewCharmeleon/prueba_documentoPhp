@@ -22,11 +22,11 @@ if(!isset($_POST)){
 				$usuario = $_POST['usuario'];
 				$password = $_POST['password'];
 				try{
-					$conn = new PDO('mysql:host=localhost;dbname=documento',$usuario,$password);
+					$conn = new PDO('mysql:host=localhost;dbname=personasBBDD',$usuario,$password);
 					$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, TRUE);
 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					
-					$sql = "SELECT * FROM usuarios WHERE usuario = :usuario AND pasword = :password";
+					$sql = "SELECT * FROM usuarios WHERE usuario = :usuario AND password = :password";
 					$stmt = $conn->prepare($sql);
 					$stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
 					$stmt->bindParam(':password', $password, PDO::PARAM_STR);
