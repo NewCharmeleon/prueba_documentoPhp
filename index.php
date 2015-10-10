@@ -3,7 +3,7 @@
  	session_start();
 	error_reporting(E_ALL);
 	ini_set("display_errors", true);
-	include "controlador/conectarBBDD.php";
+	include "controlador/porteroBBDD.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
 		      REGISTRO NACIONAL DE LAS PERSONAS</center></h2>
 		
 		
-                    <form action="/prueba_documentoPhp/controlador/conexionBBDD.php" method="post" role="form">	
+                    <form action="/prueba_documentoPhp/controlador/porteroBBDD.php" method="post" role="form">	
 			<center><fieldset>
 			
 				Usuario: <br> <input title="Ingrese Usuario" type="text" name="usuario" id="usuario"

@@ -2,8 +2,8 @@
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", true);
-////require_once "controlador/conectarBBDD.php";
-//include "controlador/conexionBBDD.php";
+require_once "../controlador/conectarBBDD.php";
+//include "controlador/porteroBBDD.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,15 +24,19 @@ ini_set("display_errors", true);
                             REGISTRO NACIONAL DE LAS PERSONAS</center></h2>
 
 
-                    <form action="/prueba_documentoPhp/controlador/conexionBBDD.php" method="get" role="form">	
+                    <form action="" method="get" role="form">	
                         <center><fieldset>
 
-                                Busqueda por Nombre: <br> <input title="Ingrese Nombre a buscar" type="text" name="busqueda" id="busqueda"
+                                Busqueda por Nombre: <br> <input title="Ingrese Nombre a buscar" type="text" name="busquedaNom" id="busquedaNom"
                                                                  placeholder= "Ingrese Nombre" pattern="[a-zA-Z]{4,20}" 
                                                                  value = "" required /> <br><br>
-
+                                                                 <?php $busquedaNom = busquedaNom; ?> 
                                 <input id="action" type="hidden" name="busqueda" value="busqueda"/>
-                                <center><button class="btn btn-primary btn-block" type="submit">"Buscar Datos por Nombre</center>
+                                <center><button class="btn btn-primary btn-block" type="submit">Buscar Datos por Nombre</center>
+                                <?php  $pdo = conectaBBDD();
+                                         // die("gikakk");
+                                          $pdo = verPersona($pdo);
+                                 ?>         
                             </fieldset>
                         </center>
                     </form>

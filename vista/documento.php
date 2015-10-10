@@ -13,26 +13,11 @@
 include_once '../paravalidar.php';
 include '../controlador/conectarBBDD.php';
 ?>
-<?php/*
-	header('Content-Type: text/html; charset=utf-8');
-	$apellido= isset($_POST['apellido']) ? $_POST['apellido'] : null;
-	$nombre= isset($_POST['nombre']) ? $_POST['nombre'] : null;
-	$numeroDocumento= isset($_POST['numeroDocumento']) ? $_POST['numeroDocumento'] : null;
-	$sexo= isset($_POST['sexo']) ? $_POST['sexo'] : null;
-	$nacionalidad= isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
-	//$foto= isset($_POST['foto']) ? $_POST['foto'] : null;
-	$domicilio= isset($_POST['domicilio']) ? $_POST['domicilio'] : null;
-	$ciudad= isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
-	$departamento= isset($_POST['departamento']) ? $_POST['departamento'] : null;
-	$provincia= isset($_POST['provincia']) ? $_POST['provincia'] : null;
-	$fechaNacimiento= isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
-	$lugarNacimiento= isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
-*/
-//$pdo = conectaBBDD($usuario, $password);
-crearArrays1();
-crearArrays2();
+<?php
+//$nacionalidades=crearArrays1();
+//crearArrays2();
 //verificarDatos();
-*/?>	
+?>	
 
 <!DOCTYPE html>
 <html lang="es">
@@ -59,17 +44,6 @@ crearArrays2();
 	<a class="btn btn-success" href="../verPersonasCargadas.php">Ver Personas Cargadas</a>
 	<a class="btn btn-danger" href="../index.php">Regresar al Inicio</a>
 	
-	<?php //crearArrays();?>
-	
-	<!-- Button (Double) 
-	<div class="form-group">
-	  <label class="col-md-4 control-label" for="button1id">Opciones</label>
-	  <div class="col-md-8">
-		<button id="button1id" name="button1id" class="btn btn-success" onClick="<a href="busquedaNombre.html></a>" Busqueda de Personas</button>
-		<button id="Regresar" name="Regresar" class="btn btn-danger" onClick="location.href = 'index.php' "> Inicio</button>
-	  </div>
-	</div>
-	-->
 	</fieldset>
 	</form>
 	<form action="" method="post" class="form-horizontal">
@@ -139,6 +113,7 @@ crearArrays2();
 					</select>
 				  </div>
 				</div>
+                                                                                                              
 
 				<!-- File Button --> 
 				<div class="form-group">
@@ -228,38 +203,9 @@ crearArrays2();
 				<div class="form-group">
 				  <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento: </label>  
 				  <div class="col-md-4">
-                                      <input type="date" name="fechaNacimiento" class="form-control" 
+                                      <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" 
                                              placeholder="Fecha de Nacimiento" value="<?php $fechaNacimiento; ?>" class="form-control input-md">
-<!-- <select name="dia">
-								<?php/*
-									for ($i=1; $i<=31; $i++){
-										if($i==date('d')){
-											echo '<option value="'.$i.'" selected>'.$i.'</option>';
-										}else{
-											echo '<option value="'.$i.'">'.$i.'</option>';
-									}}
-								*/?>
-							</select>	
-							<select name="mes">
-								<?php/*
-									for ($i=1; $i<=12; $i++){
-										if($i==date('m')){
-											echo '<option value="'.$i.'" selected>'.$i.'</option>';
-										}else{
-											echo '<option value="'.$i.'">'.$i.'</option>';
-									}}
-									*/?>
-							</select>	
-							<select name="anio">
-								<?php/*
-									for ($i=date('o'); $i>=1900; $i--){
-										if($i==date('o')){
-											echo '<option value="'.$i.'" selected>'.$i.'</option>';
-										}else{
-											echo '<option value="'.$i.'">'.$i.'</option>';
-									}}
-								*/?>	
-							</select>-->   	  
+  	  
 				  </div>
 				</div>
 

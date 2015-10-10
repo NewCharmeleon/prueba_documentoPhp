@@ -31,7 +31,13 @@ require_once '../controlador/conectarBBDD.php';
                    // $pdo = conectaBBDD();
                   //  die("gikakk");
                    // $pdo = insertarDatos($conn,$datos);
-		?>
-		<input class="btn btn-md btn-success" type="submit" value="Cargar Datos">
+                 ?><br><br>
+                <form action="" method="post">
+		<input class="btn btn-md btn-success" type="submit"  name="ver" value="Ver personas cargadas">
+                <?php echo '<a href="busquedaPersona.php";><br>Ver Personas Cargadas</br></a>'; ?>
+                </form>
+                    <?php if(isset($_POST['ver'])){
+                        //verPersonasCargadas($pdo);
+                } ?>
 	</body>
 </html>

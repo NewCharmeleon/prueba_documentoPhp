@@ -18,7 +18,7 @@
 }*/
 function crearArrays1(){
     $nacionalidades = array("Seleccione su Nacionalidad: ", "Argentina", "Extranjero");
-    
+    return $nacionalidades;
 }
 function crearArrays2(){
     
@@ -28,7 +28,7 @@ function crearArrays2(){
     'San Juan','San Luis', 'Santa Cruz', 'Santa Fé', 'Santiago del Estero',
     'Tierra del Fuego', 'Tucumán');
 }
-function verificarDatos(){
+function VerificarDatos(){
        
 	
 	$datos['apellido'] = filter_var($_POST['apellido'], FILTER_SANITIZE_STRING);
@@ -38,13 +38,15 @@ function verificarDatos(){
 	$datos['nacionalidad'] = isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
 	$datos['archivo'] = isset($_POST['archivo']) ? $_POST['archivo'] : null;
 	$datos['fechaActual']=date("Y/m/d");
-	$datos['fechaVenc']=date("'d-m-Y',strtotime('+15 Year')");
+        $anio=(15+date("Y")); 
+	$datos['fechaVenc']=date("$anio/m/d");
 	$datos['domicilio'] = filter_var($_POST['domicilio'], FILTER_SANITIZE_STRING);
-	$datos['ciudad']= filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);
-	$datos['departamento']= filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);
+	$datos['ciudad']= filter_var($_POST['ciudad'], FILTER_SANITIZE_STRING);
+	$datos['departamento']= filter_var($_POST['departamento'], FILTER_SANITIZE_STRING);
 	
 	$datos['provincia']= isset($_POST['provincia']) ? $_POST['provincia'] : null;
-	$datos['fechaNacimiento'] =date($_POST['anio']."/".$_POST['mes']."/".$_POST['dia']);
+	$datos['fechaNacimiento'] =isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
+	
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
 }

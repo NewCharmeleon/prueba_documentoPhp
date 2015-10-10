@@ -12,33 +12,28 @@ ini_set("display_errors", true);
 	require_once('funciones.php');
 	
 	//$_POST["datos"] = Array();
-        verificarDatos();
+        //$nacionalidades = crearArrays1();
+        //crearArrays2();
+        //verificarDatos();
 	
-
-/* Validar los datos ingresados DESDE PHP:
--- presencia (campos obligatorios)
--- formato (ej. sólo números)
--- reglas de negocio (ej. la fecha de vencimiento no puede ser menor o igual que la fecha de nacimiento y emisión).
--- Separar la lógica de la parte visual (archivos PHP separados, usar función 'require)'
--- Si el formulario no es válido, redirigir al formulario mostrando el error correspondiente.
--- Si el formulario es válido, mostrar una nueva página con los datos ingresados.
--- Si se intenta "saltear" la validación (ej. acceder a la nueva página directamente) redirigir a la página inicial (función header)*/
+        foreach($_POST AS $key => $value) { 
+                        $_POST[$key] = isset ($value) ? ($value) : null; 
+                } 
+        //VerificarDatos();        
 	$datos['apellido'] = filter_var($_POST['apellido'], FILTER_SANITIZE_STRING);
 	$datos['nombre'] = filter_var($_POST['nombre'], FILTER_SANITIZE_STRING);
 	$datos['numeroDocumento'] = filter_var($_POST['numeroDocumento'], FILTER_VALIDATE_INT);
 	$datos['sexo'] = filter_var($_POST['sexo'], FILTER_SANITIZE_SPECIAL_CHARS);
 	$datos['nacionalidad'] = isset($_POST['nacionalidad']) ? $_POST['nacionalidad'] : null;
 	$datos['archivo'] = isset($_POST['archivo']) ? $_POST['archivo'] : null;
-	$datos['fechaActual']=date("Y/m/d");
+	$datos['fechaActual']=date("Y-m-d");
         $anio=(15+date("Y")); 
-	$datos['fechaVenc']=date("$anio/m/d");
+	$datos['fechaVenc']=date("$anio-m-d");
 	$datos['domicilio'] = filter_var($_POST['domicilio'], FILTER_SANITIZE_STRING);
 	$datos['ciudad']= filter_var($_POST['ciudad'], FILTER_SANITIZE_STRING);
 	$datos['departamento']= filter_var($_POST['departamento'], FILTER_SANITIZE_STRING);
-	
 	$datos['provincia']= isset($_POST['provincia']) ? $_POST['provincia'] : null;
 	$datos['fechaNacimiento'] =isset($_POST['fechaNacimiento']) ? $_POST['fechaNacimiento'] : null;
-	
 	$datos['lugarNacimiento']=isset($_POST['lugarNacimiento']) ? $_POST['lugarNacimiento'] : null;
 	
 	
@@ -127,9 +122,9 @@ ini_set("display_errors", true);
 		exit;
 	}else{
 		if ($errores): ?>
-		   <ul style="color: #f00;">
+<br> <ul style="color: #f00;"><br>
           <?php foreach ($errores as $error): ?>
-             <li> <?php echo $error ?> </li>
+                       <li> <?php echo $error ?> </li>
           <?php endforeach; ?>
        </ul>
        <?php endif;
