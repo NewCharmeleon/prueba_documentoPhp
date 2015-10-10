@@ -8,15 +8,17 @@ $pagina = $_GET["pagina"];
 if (!$pagina) { 
    	$inicio = 0; 
    	$pagina=1; 
-        $criterio=0;
+        //$criterio=1;
 } 
 else { 
    	$inicio = ($pagina - 1) * $TAMANO_PAGINA; 
 }
-
+echo '<a href="/prueba_documentoPhp/index.php";><br>Volver al Inicio</br></a>';
+echo '<a href="documento.php";><br>Volver a pagina de Carga</br></a>';
+echo '<br><br>';
 $pdo = conectaBBDD();
-verCantidadDatos($pdo, $TAMANO_PAGINA,$pagina);
-$personas = verPersonasCargadas($pdo);
+$total_paginas=verCantidadDatosLimitados($pdo,$TAMANO_PAGINA,$pagina);
+$personas = verPersonasPorPagina($pdo, $inicio, $TAMANO_PAGINA);
 if($personas){
     echo '<br>'."Personas Cargadas".':'.'<br>';
     foreach($personas as $persona){
@@ -43,7 +45,7 @@ if ($total_paginas > 1){
          	echo $pagina . " "; 
       	else 
          	//si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa página 
-         	echo "<a href='index.php?pagina=" . $i . "&criterio=" . $txt_criterio . "'>" . $i . "</a> "; 
+         	echo "<a href='verPersonasLimitado.php?pagina=" . $i . "'>" . $i . "</a> "; 
    	} 
 }
 /*$personas = verPersonasPorPagina($pdo, $criterio, $inicio, $TAMANO_PAGINA);

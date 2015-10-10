@@ -41,7 +41,8 @@ include '../controlador/conectarBBDD.php';
 	
         <a class="btn btn-success" href="busquedaNombre.php">Busqueda de Persona</a>
 	<a class="btn btn-success" href="busquedaAvanzada.html">Busqueda de Persona avanzada</a>
-	<a class="btn btn-success" href="../verPersonasCargadas.php">Ver Personas Cargadas</a>
+	<a class="btn btn-success" href="verPersonas.php">Ver Personas Cargadas</a>
+        <a class="btn btn-success" href="verPersonasLimitado.php">Ver Personas Cargadas por Pagina</a>
 	<a class="btn btn-danger" href="../index.php">Regresar al Inicio</a>
 	
 	</fieldset>
